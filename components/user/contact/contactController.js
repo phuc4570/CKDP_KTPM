@@ -1,6 +1,10 @@
 const globalVar = require('../../../routes/globalVar');
 
 exports.contact = (req, res)=>{
-  globalVar.changeIsLogin(true);
+  if (isLogin!==2) {
+        if(isLogin === 1)
+            res.redirect('/admin');
+        res.redirect("/");
+    }
   res.render('user/contact/contact', { layout: "user_layout"});
 }
