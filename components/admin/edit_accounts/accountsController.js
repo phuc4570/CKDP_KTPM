@@ -62,11 +62,10 @@ exports.delete = async (req, res, next) => {
     if (isLogin === 2) res.redirect("/user");
     res.redirect("/");
   }
-  const { accountId } = req.params;
-  await accounts.delete(accountId);
-  res.render('admin/edit_accounts/details',{
-    agent,
-    layout: "admin_layout"});
+  const account = req.body;
+
+  await accounts.delete(account);
+  res.redirect("/admin/edit_accounts");
 };
 
 exports.saveEdit = async (req, res, next) => {
@@ -82,6 +81,7 @@ exports.saveEdit = async (req, res, next) => {
   }
   //delete account.isRePass;
   await accounts.saveEdit(account);
+
   res.redirect("/admin/edit_accounts");
 };
 
