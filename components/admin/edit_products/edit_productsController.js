@@ -2,9 +2,10 @@ const globalVar = require("../../../routes/globalVar");
 const products = require("./edit_productsService");
 const qs = require("qs");
 exports.product = async (req, res) => {
-  if (isLogin !== 1) {
-    if (isLogin === 2) res.redirect("/user");
-    res.redirect("/");
+  if(Object.values(agent).length === 0){
+      res.redirect("/");
+  }else if(Object.values(agent)[0] !== 1){
+      res.redirect("/user");
   }
   const { name: nameFilter } = req.query;
   let list_products = [];
@@ -28,15 +29,15 @@ exports.product = async (req, res) => {
 };
 
 exports.details = async (req, res, next) => {
-  if (isLogin !== 1) {
-    if (isLogin === 2) res.redirect("/user");
-    res.redirect("/");
+  if(Object.values(agent).length === 0){
+      res.redirect("/");
+  }else if(Object.values(agent)[0] !== 1){
+      res.redirect("/user");
   }
   const { id:id } = req.params;
 
   const detail = await products.getId(id);
   console.log(detail);
-
   res.render('admin/edit_products/details', {
     detail,
     agent,
@@ -44,9 +45,10 @@ exports.details = async (req, res, next) => {
 };
 
 exports.delete = async (req, res, next) => {
-  if (isLogin !== 1) {
-    if (isLogin === 2) res.redirect("/user");
-    res.redirect("/");
+  if(Object.values(agent).length === 0){
+      res.redirect("/");
+  }else if(Object.values(agent)[0] !== 1){
+      res.redirect("/user");
   }
   const { id:id } = req.params;
   await products.delete(id);
@@ -54,9 +56,10 @@ exports.delete = async (req, res, next) => {
 };
 
 exports.saveEdit = async (req, res, next) => {
-  if (isLogin !== 1) {
-    if (isLogin === 2) res.redirect("/user");
-    res.redirect("/");
+  if(Object.values(agent).length === 0){
+      res.redirect("/");
+  }else if(Object.values(agent)[0] !== 1){
+      res.redirect("/user");
   }
   const product = req.body;
 
@@ -66,9 +69,10 @@ exports.saveEdit = async (req, res, next) => {
 };
 
 exports.add = (req, res, next) => {
-  if (isLogin !== 1) {
-    if (isLogin === 2) res.redirect("/user");
-    res.redirect("/");
+  if(Object.values(agent).length === 0){
+      res.redirect("/");
+  }else if(Object.values(agent)[0] !== 1){
+      res.redirect("/user");
   }
   res.render('admin/edit_products/add', {
     agent,
@@ -77,9 +81,10 @@ exports.add = (req, res, next) => {
 }
 
 exports.saveAdd = async (req, res, next) => {
-  if (isLogin !== 1) {
-    if (isLogin === 2) res.redirect("/user");
-    res.redirect("/");
+  if(Object.values(agent).length === 0){
+      res.redirect("/");
+  }else if(Object.values(agent)[0] !== 1){
+      res.redirect("/user");
   }
   const product = req.body;
 

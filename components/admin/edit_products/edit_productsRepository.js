@@ -39,4 +39,3 @@ exports.add = async (account, nextId) => {
     //const result =  await db.connection.execute("insert into menu set ?", [account]);
     return result[0];
 }
-

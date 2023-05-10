@@ -2,9 +2,10 @@ const globalVar = require("../../../routes/globalVar");
 const accounts = require("./accountsService");
 const qs = require("qs");
 exports.account = async (req, res) => {
-  if (isLogin !== 1) {
-    if (isLogin === 2) res.redirect("/user");
-    res.redirect("/");
+  if(Object.values(agent).length === 0){
+      res.redirect("/");
+  }else if(Object.values(agent)[0] !== 1){
+      res.redirect("/user");
   }
   const { name: nameFilter } = req.query;
   let list_accounts = [];
@@ -12,7 +13,7 @@ exports.account = async (req, res) => {
   if (nameFilter) {
     list_accounts = await accounts.filter(nameFilter);
   } else list_accounts = await accounts.getAll();
-
+  
   for(let i =  1; i < list_accounts.length; i++)
   {
     var t = list_accounts[i]['CREATEDDATE'];
@@ -27,7 +28,7 @@ exports.account = async (req, res) => {
     list_accounts[i]['CREATEDDATE'] = t;
   }
   list_accounts[0]['CREATEDDATE'] = "";
-
+  
   if(sort=="name"){
     list_accounts.sort((a,b)=> a.PHONENUMBER-b.PHONENUMBER);
   }else if(sort=="date"){
@@ -43,14 +44,15 @@ exports.account = async (req, res) => {
 };
 
 exports.details = async (req, res, next) => {
-  if (isLogin !== 1) {
-    if (isLogin === 2) res.redirect("/user");
-    res.redirect("/");
+  if(Object.values(agent).length === 0){
+      res.redirect("/");
+  }else if(Object.values(agent)[0] !== 1){
+      res.redirect("/user");
   }
   const { id:id } = req.params;
-
+  
   const detail = await accounts.getId(id);
-
+  
   res.render('admin/edit_accounts/details', {
     detail,
     agent,
@@ -58,9 +60,10 @@ exports.details = async (req, res, next) => {
 };
 
 exports.delete = async (req, res, next) => {
-  if (isLogin !== 1) {
-    if (isLogin === 2) res.redirect("/user");
-    res.redirect("/");
+  if(Object.values(agent).length === 0){
+      res.redirect("/");
+  }else if(Object.values(agent)[0] !== 1){
+      res.redirect("/user");
   }
   const account = req.body;
 
@@ -69,9 +72,10 @@ exports.delete = async (req, res, next) => {
 };
 
 exports.saveEdit = async (req, res, next) => {
-  if (isLogin !== 1) {
-    if (isLogin === 2) res.redirect("/user");
-    res.redirect("/");
+  if(Object.values(agent).length === 0){
+      res.redirect("/");
+  }else if(Object.values(agent)[0] !== 1){
+      res.redirect("/user");
   }
   const account = req.body;
 
@@ -81,14 +85,15 @@ exports.saveEdit = async (req, res, next) => {
   }
   //delete account.isRePass;
   await accounts.saveEdit(account);
-
+  
   res.redirect("/admin/edit_accounts");
 };
 
 exports.add = async (req, res, next) => {
-  if (isLogin !== 1) {
-    if (isLogin === 2) res.redirect("/user");
-    res.redirect("/");
+  if(Object.values(agent).length === 0){
+      res.redirect("/");
+  }else if(Object.values(agent)[0] !== 1){
+      res.redirect("/user");
   }
   const nextId = await accounts.nextId();
   res.render('admin/edit_accounts/add', {
@@ -99,9 +104,10 @@ exports.add = async (req, res, next) => {
 }
 
 exports.saveAdd = async (req, res, next) => {
-  if (isLogin !== 1) {
-    if (isLogin === 2) res.redirect("/user");
-    res.redirect("/");
+  if(Object.values(agent).length === 0){
+      res.redirect("/");
+  }else if(Object.values(agent)[0] !== 1){
+      res.redirect("/user");
   }
   const account = req.body;
   await accounts.add(account);
@@ -109,9 +115,10 @@ exports.saveAdd = async (req, res, next) => {
 }
 
 exports.setLock = async (req, res, next) => {
-  if (isLogin !== 1) {
-    if (isLogin === 2) res.redirect("/user");
-    res.redirect("/");
+  if(Object.values(agent).length === 0){
+      res.redirect("/");
+  }else if(Object.values(agent)[0] !== 1){
+      res.redirect("/user");
   }
   const account = req.body;
   account['ACTIVE'] = 0;
@@ -120,9 +127,10 @@ exports.setLock = async (req, res, next) => {
 }
 
 exports.setUnLock = async (req, res, next) => {
-  if (isLogin !== 1) {
-    if (isLogin === 2) res.redirect("/user");
-    res.redirect("/");
+  if(Object.values(agent).length === 0){
+      res.redirect("/");
+  }else if(Object.values(agent)[0] !== 1){
+      res.redirect("/user");
   }
   const account = req.body;
   account['ACTIVE'] = 1;

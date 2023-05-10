@@ -7,10 +7,11 @@ const profile = require("./profile/profileController");
 const statistic = require("./statistic/statisticController");
 const register = require("./register/registerController");
 
-router.get("/", profile.profile);
+router.get("/", profile.profileRedirect);
 router.get("/edit_accounts", edit_accounts.account);
 router.get("/edit_products", edit_products.product);
 router.get("/profile", profile.profile);
+router.post("/profile", profile.editProfile);
 router.get("/statistic", statistic.statistic);
 router.get("/register", register.register);
 
@@ -32,6 +33,5 @@ router.post("/edit_products/patch", edit_products.saveEdit);
 //lock and unlock
 router.post("/edit_accounts/lock", edit_accounts.setLock);
 router.post("/edit_accounts/unlock", edit_accounts.setUnLock);
-
 
 module.exports = router;

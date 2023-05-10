@@ -23,7 +23,7 @@ exports.delete = async (account) => {
 
 exports.saveEdit = async (id) => {
     var obj = Object.values(id);
-
+    
     if(obj[4]) {
         const password = '1234';
         await db.connection.execute("UPDATE accounts SET PHONENUMBER = ?, PASSWORD = ?, BUDGET = ? WHERE ID = ?;", [obj[1], password, obj[2], obj[0]]);

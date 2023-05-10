@@ -1,4 +1,3 @@
-
 const productsRepository = require("./edit_productsRepository");
 
 exports.getAll = (category) => {
@@ -28,4 +27,3 @@ exports.add = (account) => {
 exports.nextId = () => {
     return productsRepository.nextId();
 }
-
