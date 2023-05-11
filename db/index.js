@@ -13,5 +13,4 @@ const db = { connection: null };
   console.log("Database connected!");
 })();
 
-
 module.exports = db;
