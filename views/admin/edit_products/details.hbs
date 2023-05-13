@@ -1,6 +1,6 @@
 <main id="main" class="main">
-    <form method="POST">
-        <div class="card">
+    <div class="card">
+        <form method="POST" encType="multipart/form-data">
             <h5 class="card-header">
                 Accounts Editor
             </h5>
@@ -13,20 +13,7 @@
                     <label for="txtUserName" class="font-weight-bold">Name</label>
                     <input type="text" class="form-control" id="txtUserName" name="NAME" value="{{detail.NAME}}">
                 </div>
-                <div class="form-group" class="font-weight-bold">
-                    <form action="/" method="POST" encType="multipart/form-data">
-                        <label for="txtIMAGE" class="font-weight-bold">IMAGE</label>
-                        <input type="file" name="sampleFile" accept="image/*" />
-                        <input type="submit" class="btn btn-primary">
-                    </form>
-                    <div class="card">
-                        {{#if this.profile_image}}
-                            <img class="card__image" src="{{this.profile_image}}" alt="User Profile">
-                        {{else}}
-                            <img class="card__image" src="/img/default.jpg" alt="User Profile">
-                        {{/if}}
-                    </div>
-                </div>
+
                 <div class="form-group" class="font-weight-bold">
                     <label for="txtPRICE" class="font-weight-bold">PRICE</label>
                     <input type="text" class="form-control" id="txtPRICE" name="PRICE" value="{{detail.PRICE}}">
@@ -34,13 +21,18 @@
                 <div class="form-group">
                     <label for="CategorySelect">Category</label>
                     <select name="Category" id="CategorySelect" class="form-control">
-                        <option value="1">Cơm</option>
-                        <option value="2">Mì</option>
-                        <option value="3">Nước</option>
-                        <option value="4">Khác</option>
+                        <option value="Cơm">Cơm</option>
+                        <option value="Mì">Mì</option>
+                        <option value="Nước">Nước</option>
+                        <option value="Khác">Khác</option>
                     </select>
                 </div>
 
+                <label for="txtIMAGE" class="font-weight-bold">IMAGE</label>
+                <input type="file" name="image" accept="image/*"/>
+                <div class="card">
+                    <img id="image" class="card__image" src="/assets_menu/img/menu/{{detail.IMAGE}}" alt="" width="400" height="300"/>
+                </div>
             </div>
             <div class="card-footer text-muted">
                 <a class="btn btn-outline-secondary" href="/admin/edit_products" role="button">
@@ -57,6 +49,13 @@
                     Save
                 </button>
             </div>
-        </div>
-    </form>
+        </form>
+
+
+    </div>
+
 </main>
+
+{{#extend "scripts"}}
+    <script type="text/javascript" src="/assets_editproducts/js/upload_image.js"></script>
+{{/extend}}

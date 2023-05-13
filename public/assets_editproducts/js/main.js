@@ -30,6 +30,7 @@ $(document).ready(function(){
                     let productRow = '<tr>' +
                         '<td>' + product.ID + '</td>' +
                         '<td>' + product.NAME + '</td>' +
+                        '<td>' + '<img src="/assets_menu/img/menu/' + product.IMAGE + '"width="200" height="100"</td>' +
                         '<td>' + product.PRICE + '</td>' +
                         '<td class="text-right">' + '<a class="btn btn-sm btn-dark" href="/admin/edit_products/' + product.ID +
                         '" role="button" title="Edit products">' +
@@ -89,7 +90,7 @@ $(document).ready(function(){
         let category = '-1';
         let search = null;
 
-        search = this.value;
+        category = this.value;
 
 
         let namesorting = false;
@@ -212,9 +213,12 @@ $(document).ready(function(){
             // adding .active class on the first pageIndex for the loading time
             if(i==1){
 
-                pageIndex = "<li class='page-item active'><a class='page-link'>"
+                pageIndex = "<li class='page-item active' id='first-page'><a class='page-link'>"
                     + i + "</a></li>"
-            } else {
+            } else if(i==totalPages) {
+                pageIndex = "<li class='page-item' id='last-page'><a class='page-link'>"
+                    + i + "</a></li>"
+            }else{
                 pageIndex = "<li class='page-item'><a class='page-link'>"
                     + i + "</a></li>"
             }
@@ -295,11 +299,15 @@ $(document).ready(function(){
             $("li.active").removeClass("active");
 
             $(".carousel-inner .carousel-item:first-child").addClass("active");
+            $("#first-page").addClass("active");
+
         } else if(val.toUpperCase()==="LAST") {
             let page = $("ul.pagination li").length -4;
             fetchproducts(page -1, 5, search,  selectedCategory, namesorting, pricesorting, desc);
             $("li.active").removeClass("active");
             $(".carousel-inner .carousel-item:last-child").addClass("active");
+            $("#last-page").addClass("active");
+
         }
         else {
             fetchproducts(parseInt(val) - 1, 5, search,  selectedCategory, namesorting, pricesorting, desc);
