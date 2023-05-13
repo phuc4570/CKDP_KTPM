@@ -17,13 +17,6 @@ exports.details = async (req, res, next) => {
     layout: "admin_layout"});
 };
 
-exports.delete = async (req, res, next) => {
-  const account = req.body;
-
-  await accounts.delete(account);
-  res.redirect("/admin/edit_accounts");
-};
-
 exports.saveEdit = async (req, res, next) => {
   const account = req.body;
   await accounts.saveEdit(account);
@@ -33,6 +26,7 @@ exports.saveEdit = async (req, res, next) => {
 
 exports.add = async (req, res, next) => {
   const nextId = await accounts.nextId();
+
   res.render('admin/edit_accounts/add', {
     nextId,
     layout: "admin_layout"
@@ -65,13 +59,13 @@ exports.setUnLock = async (req, res, next) => {
 
 exports.paginator = async (req, res) => {
   try{
-    let page = parseInt(req.query.page);
-    let limit = parseInt(req.query.size);
-    let search = req.query.search ? req.query.search : -1;
-    let phone = (req.query.phonesorting === 'true');
-    let date = (req.query.datesorting === 'true');
-    let category = req.query.category ? req.query.category : -1;
-    let desc = (req.query.desc === 'true');
+    let page = parseInt(req.body.page);
+    let limit = parseInt(req.body.size);
+    let search = req.body.search ? req.body.search : -1;
+    let phone = (req.body.phonesorting === 'true');
+    let date = (req.body.datesorting === 'true');
+    let category = req.body.category ? req.body.category : -1;
+    let desc = (req.body.desc === 'true');
 
     const offset = page ? page * limit : 0;
 
@@ -133,7 +127,7 @@ exports.paginator = async (req, res) => {
           }
         }
         else{
-            result = await accounts.getAllActive(category);
+            result = await accounts.getLimitAccounts(category, offset, limit);
         }
       }
     }
