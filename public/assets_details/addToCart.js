@@ -16,14 +16,27 @@ $(document).ready(function () {
     await $.post("/user/api/cart/add", data);
     window.location.href = "/user/cart";
   });
-  $("#ViewReview").on("click", async function (e) {
-    e.preventDefault();
-    const productID = parseInt($("#ID").text());
-    const data = {
-      productID: productID,
-    };
 
-    window.location.href = "/user/cart";
+  (async function () {
+    await renderReviewList();
+  })();
+
+  $("#sendNewComment").click(async function () {
+    const cmt = $("#new-review").val();
+    if (cmt == "") {
+      $("#notyet-save-review").show();
+      $("#success-save-review").hide();
+    } else {
+      $("#notyet-save-review").hide();
+      $("#success-save-review").show();
+      const productID = parseInt($("#ID").text());
+      const data = {
+        comment: cmt,
+        productID: productID,
+      };
+      await $.post("/user/api/review/add", data);
+      renderReviewList();
+    }
   });
 });
 
