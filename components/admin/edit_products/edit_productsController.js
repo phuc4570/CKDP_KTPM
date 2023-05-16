@@ -21,15 +21,14 @@ exports.details = async (req, res, next) => {
 };
 
 exports.delete = async (req, res, next) => {
-  await products.delete(req.body.ProductID);
+  await products.delete(req.params.id);
   res.redirect("/admin/edit_products");
 };
 
 exports.saveEdit = async (req, res, next) => {
-  const id = req.body.ProductID;
+  const id = req.body.ProductID[0];
   const imagePath = path.join(__dirname,'../../../','/public/assets_menu/img/menu');
   const product = req.body;
-
   if (!req.file) {
     await products.saveEdit(product);
     res.redirect("/admin/edit_products");
@@ -91,7 +90,8 @@ exports.paginator = async (req, res) => {
     var arr = [];
     var countTotal = -1;
     if(search != -1){
-      result = await products.getSearch(search);
+      result = await products.getSearch(search, offset, limit);
+      countTotal = await products.countSearch(search);
     }else {
       // NOT Filtering with salary
       if (category < 0 || category == 'All') {
