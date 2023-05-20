@@ -26,7 +26,7 @@ exports.delete = async (req, res, next) => {
 };
 
 exports.saveEdit = async (req, res, next) => {
-  const id = req.body.ProductID[0];
+  const id = req.body.ProductID;
   const imagePath = path.join(__dirname,'../../../','/public/assets_menu/img/menu');
   const product = req.body;
   if (!req.file) {
@@ -37,6 +37,7 @@ exports.saveEdit = async (req, res, next) => {
     const fileUpload = new resize(imagePath, id);
     const filename = await fileUpload.save(req.file.buffer);
     await products.editImage(id);
+    await products.saveEdit(product);
     res.redirect("/admin/edit_products");
   }
 };
