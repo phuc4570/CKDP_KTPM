@@ -5,10 +5,10 @@ const db = { connection: null };
 
 (async () => {
   db.connection = await mysql.createConnection({
-    host: "mysql-127431-0.cloudclusters.net",
-    port: 19064,
+    host: "mysql-129861-0.cloudclusters.net",
+    port: 19989,
     user: "admin",
-    password: "lLdajpkS",
+    password: "pMLuw8fi",
     database: "netcafe",
   });
   console.log("Database connected!");
